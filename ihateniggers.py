@@ -8,24 +8,30 @@ def main():
    while(run):
        OknoGry.fill((0,0,0))
        pygame.time.delay(200)
-       wazShape=pygame.Rect((140,140),(47,47))
        wazShape=pygame.Rect((zmienna1,zmienna2),(47,47))
+       wazShape=pygame.Rect((zmienna1,zmienna2),(40,40))
        pygame.draw.rect(OknoGry,(255,192,203),wazShape)
+       pygame.draw.circle(OknoGry,(0,255,0),(100,100),20)
        for event in pygame.event.get():
            if event.type == pygame.QUIT:
                run=False
-           #ruch weza
            elif event.type == pygame.KEYDOWN:
                if event.key == pygame.K_UP:
                    zmienna2=zmienna2-20
                elif event.key == pygame.K_DOWN:
                    zmienna2=zmienna2+20
-       #zmienna1=zmienna1+20
-       #zmienna2=zmienna2+20
+               elif event.key == pygame.K_LEFT:
+                   zmienna1=zmienna1-20
+               elif event.key == pygame.K_RIGHT:
+                   zmienna1=zmienna1+20
        if zmienna1>400:
            zmienna1=0
        if zmienna2>400:
            zmienna2=0
+       if zmienna1<0:
+           zmienna1=400
+       if zmienna2<0:
+           zmienna2=400
        pygame.display.update()
 
-main()  
+main()
