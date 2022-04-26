@@ -1,13 +1,18 @@
 import pygame
 import random
 import waz
+import jablko
 
-
+iloscJablek = 5
 def main():
+#tworzenie jabłek
+    objectApple=[]
+    for nrApple in range(0,iloscJablek):
+        objectApple.append(jablko.Jablko())
+
     obiektWaz = waz.Snake()
 
-    xApple = random.randint(0, 9) * 40 + 20
-    yApple = random.randint(0, 9) * 40 + 20
+
     pygame.init()
     OknoGry = pygame.display.set_mode((400, 400), 0, 32)
     run = True
@@ -18,8 +23,6 @@ def main():
         OknoGry.fill((0, 0, 0))
         pygame.time.delay(200)
 
-        # rysowanie jabłka
-        pygame.draw.circle(OknoGry, (0, 255, 0), (xApple, yApple), 20)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
@@ -40,11 +43,13 @@ def main():
         # pobranie pozycji glowy weza
         glowa = obiektWaz.pozycje[-1]
         # waż zjada jabłko
-        if glowa[0] == xApple - 20 and glowa[1] == yApple - 20:
-            obiektWaz.eating()
-            xApple = random.randint(0, 9) * 40 + 20
-            yApple = random.randint(0, 9) * 40 + 20
-            pygame.draw.circle(OknoGry, (255, 255, 0), (xApple, yApple), 20)
+        for nrApple in objectApple[::]:
+            positionApple=nrApple.getPosition()
+            if glowa[0]==positionApple[0] - 20 and glowa[1]==positionApple[1] - 20:
+                obiektWaz.eating()
+                nrApple.randomPosition()
+            #rysowanie jabłka
+            nrApple.drawApple(OknoGry)
 
         czcionka = pygame.font.SysFont('comicsans', 20)
         tekst = czcionka.render("Punkty: {0}".format(obiektWaz.punkty), 1, (255, 255, 255))
